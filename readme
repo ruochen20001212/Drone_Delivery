@@ -1,1 +1,115 @@
+Dataset Description
+This file contains a synthetic order instance for experimental evaluation in an AP-related delivery scenario:
+
+Expr1_order_instance_for_AP_(11_12)_orderNum_10_stationNum_3_lockerNum_1051_droneNum_20_seed_1.csv
+
+The dataset records a set of delivery orders, where each row represents one order request with its origin and destination information. Specifically, it includes the identifiers of the merchant (store_id) and customer (home_id), together with their corresponding geographic coordinates.
+
+This instance can be used in studies on drone delivery, parcel locker assignment, order dispatching, route planning, and other last-mile logistics optimization problems.
+
+File Naming Convention
+The file name encodes the experimental configuration:
+
+Expr1_order_instance_for_AP_(11_12)_orderNum_10_stationNum_3_lockerNum_1051_droneNum_20_seed_1.csv
+
+The components can be interpreted as follows:
+
+Expr1: experiment ID or experiment group
+order_instance_for_AP: order instance generated for the AP scenario
+(11_12): scenario identifier, region index, or parameter setting label
+orderNum_10: number of orders = 10
+stationNum_3: number of stations = 3
+lockerNum_1051: number of lockers = 1051
+droneNum_20: number of drones = 20
+seed_1: random seed used for instance generation = 1
+Note: The exact meaning of AP and (11_12) should be defined according to the corresponding project or experiment setup.
+
+File Format
+The file is stored in CSV format. The first row is the header:
+
+<CSV>
+order_ID,store_id,home_id,org_lng,org_lat,des_lng,des_lat
+Attribute Description
+Column Name	Type	Description
+order_ID	float / integer-like	Order identifier
+store_id	float / integer-like	Identifier of the origin store (merchant)
+home_id	float / integer-like	Identifier of the destination customer/home
+org_lng	float	Longitude of the order origin
+org_lat	float	Latitude of the order origin
+des_lng	float	Longitude of the order destination
+des_lat	float	Latitude of the order destination
+Example Records
+A sample of the dataset is shown below:
+
+<CSV>
+order_ID,store_id,home_id,org_lng,org_lat,des_lng,des_lat
+0.0,4402.0,25119.0,114.04328064244112,22.644065642441127,114.02754198425365,22.62832698425365
+0.0,17629.0,13590.0,114.1100671210133,22.5495051210133,114.13188248195249,22.571320481952498
+0.0,12685.0,10163.0,114.04703739051003,22.640104390510036,114.0301082481606,22.623175248160603
+0.0,19116.0,11157.0,114.11052102654651,22.549959026546517,114.12303142474425,22.56246942474426
+...
+Semantic Meaning of Each Record
+Each row in the dataset corresponds to one delivery order:
+
+the order originates from a merchant represented by store_id;
+the delivery destination is a customer/home represented by home_id;
+org_lng and org_lat specify the geographic coordinates of the merchant;
+des_lng and des_lat specify the geographic coordinates of the customer/home.
+These records can be directly used as input for optimization models or simulation frameworks involving origin-destination order demand.
+
+Data Characteristics
+According to the file name, this instance contains the following configuration:
+
+Number of orders: 10
+Number of stations: 3
+Number of lockers: 1051
+Number of drones: 20
+Random seed: 1
+Notes and Data Usage Considerations
+1. Identifier Format
+Although order_ID, store_id, and home_id appear as floating-point values in the CSV file, they should be interpreted as categorical or integer identifiers in most applications.
+
+It is recommended to cast them to integer type after loading the file.
+
+2. Order ID Uniqueness
+In the provided sample, all values in order_ID are 0.0. This may indicate one of the following:
+
+the order identifier field was not uniquely assigned during data generation; or
+this field is not used in the current experimental setting.
+If unique order indexing is required, users are advised to regenerate or relabel the order IDs.
+
+3. Geographic Coordinates
+The coordinate fields are represented in decimal degrees. Before performing distance calculation, map matching, or routing operations, please verify that the coordinate reference system is consistent with the geographic tools or map services being used.
+
+4. Reproducibility
+The suffix seed_1 indicates that this instance was generated using random seed 1. To reproduce the same dataset, the same generation parameters and seed value should be used.
+
+Recommended Loading Method
+Python Example
+<PYTHON>
+import pandas as pd
+file_path = "Expr1_order_instance_for_AP_(11_12)_orderNum_10_stationNum_3_lockerNum_1051_droneNum_20_seed_1.csv"
+df = pd.read_csv(file_path)
+# Convert identifier columns to integers if needed
+df["order_ID"] = df["order_ID"].astype(int)
+df["store_id"] = df["store_id"].astype(int)
+df["home_id"] = df["home_id"].astype(int)
+print(df.head())
+print("Number of records:", len(df))
+Potential Applications
+This dataset is suitable for research and experiments in the following areas:
+
+drone delivery planning
+last-mile logistics optimization
+parcel locker assignment
+order allocation and dispatching
+multi-resource collaborative delivery
+route planning and simulation
+Citation and Use
+If this dataset is part of a research project, thesis, or published work, users are encouraged to cite the corresponding paper, repository, or technical report where the data generation process and experimental setting are described.
+
+Version Information
+File format: CSV
+Recommended encoding: UTF-8
+Instance seed: 1
 
