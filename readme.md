@@ -62,9 +62,9 @@ order_ID,store_id,home_id,org_lng,org_lat,des_lng,des_lat
 
 | Column Name | Type | Description |
 |-------------|------|-------------|
-| `order_ID` | float / integer-like | Order identifier |
-| `store_id` | float / integer-like | Identifier of the origin store (merchant) |
-| `home_id` | float / integer-like | Identifier of the destination customer/home |
+| `order_ID` | integer-like | Unique order identifier |
+| `store_id` | integer-like | Identifier of the origin store (merchant) |
+| `home_id` | integer-like | Identifier of the destination customer/home |
 | `org_lng` | float | Longitude of the order origin |
 | `org_lat` | float | Latitude of the order origin |
 | `des_lng` | float | Longitude of the order destination |
@@ -76,11 +76,11 @@ order_ID,store_id,home_id,org_lng,org_lat,des_lng,des_lat
 
 ```csv
 order_ID,store_id,home_id,org_lng,org_lat,des_lng,des_lat
-0.0,4402.0,25119.0,114.04328064244112,22.644065642441127,114.02754198425365,22.62832698425365
-0.0,17629.0,13590.0,114.1100671210133,22.5495051210133,114.13188248195249,22.571320481952498
-0.0,12685.0,10163.0,114.04703739051003,22.640104390510036,114.0301082481606,22.623175248160603
-0.0,19116.0,11157.0,114.11052102654651,22.549959026546517,114.12303142474425,22.56246942474426
-0.0,7613.0,20445.0,114.04426046763169,22.645045467631697,114.0659001420401,22.666685142040112
+1,4402,25119,114.04328064244112,22.644065642441127,114.02754198425365,22.62832698425365
+2,17629,13590,114.1100671210133,22.5495051210133,114.13188248195249,22.571320481952498
+3,12685,10163,114.04703739051003,22.640104390510036,114.0301082481606,22.623175248160603
+4,19116,11157,114.11052102654651,22.549959026546517,114.12303142474425,22.56246942474426
+5,7613,20445,114.04426046763169,22.645045467631697,114.0659001420401,22.666685142040112
 ```
 
 ---
@@ -89,6 +89,7 @@ order_ID,store_id,home_id,org_lng,org_lat,des_lng,des_lat
 
 Each row corresponds to one delivery order:
 
+- the order is identified by a unique `order_ID`
 - the order originates from a merchant represented by `store_id`
 - the delivery destination is a customer/home represented by `home_id`
 - `org_lng` and `org_lat` specify the origin coordinates
@@ -114,18 +115,13 @@ According to the file name, this dataset instance contains:
 
 ### 8.1 Identifier Format
 
-Although `order_ID`, `store_id`, and `home_id` are stored as floating-point values in the CSV file, they should generally be interpreted as identifiers rather than continuous numeric values.
+The fields `order_ID`, `store_id`, and `home_id` should be interpreted as identifiers rather than continuous numeric values.
 
-It is recommended to convert them to integer type after loading the file.
+In some CSV readers, these fields may still be loaded as floating-point numbers depending on the original file format or parsing behavior. If needed, users may convert them to integer type after loading the file.
 
-### 8.2 Order ID Uniqueness
+### 8.2 Order ID Assignment
 
-In the provided sample, all values in `order_ID` are `0.0`. This may indicate that:
-
-- unique order IDs were not assigned during data generation, or
-- this field is not used in the current experimental setting
-
-If unique identifiers are required, users should relabel the orders after loading the data.
+The `order_ID` field has been assigned as a unique ascending identifier for each order record. This makes the dataset easier to process, reference, and validate in downstream experiments and simulations.
 
 ### 8.3 Geographic Coordinates
 
